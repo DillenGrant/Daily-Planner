@@ -11,6 +11,7 @@ $(document).ready(function () {
 
   var currentHour = dayjs().hour();
 
+
   $(".time-block").each(function() {
     var blockHour = parseInt($(this).attr("id").split("-")[1]);
 
@@ -29,9 +30,13 @@ $(document).ready(function () {
     $(this).find("textarea").val(storedInput);
   });
 
-  var currentDate = dayjs().format("dddd, MMMM D, YYYY");
+  var updateDateTime = () => {
+    var currentDateTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    document.getElementById('currentDay').textContent = currentDateTime;
+  };
+  setInterval(updateDateTime, 1000); 
+  updateDateTime();
 
-  $("#currentDay").text(currentDate);
 
 });
   // TODO: Add a listener for click events on the save button. This code should
