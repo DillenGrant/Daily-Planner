@@ -1,11 +1,38 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-$(function () {
+
+$(document).ready(function () {
   $(".saveBtn").on("click", function() {
     var userInput = $(this).siblings("textarea").val();
     var timeBlockID = $(this).closest(".time-block").attr("id");
     localStorage.setItem(timeBlockID, userInput);
+  
+
+  var currentHour = dayjs().hour();
+
+  $(".time-block").each(function() {
+    var blockHour = parseInt($(this).attr("id").split("-")[1]);
+
+    if (blockHour < currentHour) {
+      $(this).addClass("past");
+    } else if (blockHour === currentHour) {
+      $(this).addClass("present");
+    } else {
+      $(this).addClass("future");
+    }
+  });
+  
+  $(".time-block").each(function() {
+    var timeBlockID = $(this).attr("id");
+    var storedInput = localStorage.getItem(timeBlockID);
+    $(this).find("textarea").val(storedInput);
+  });
+
+  var currentDate = dayjs().format("dddd, MMMM D, YYYY");
+
+  $("#currentDay").text(currentDate);
+
 });
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in

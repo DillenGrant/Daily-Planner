@@ -4,7 +4,7 @@ body {
 }
 
 textarea {
-  background: lightblue;
+  background: transparent;
   border: none;
   resize: none;
   color: #000000;
